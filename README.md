@@ -9,6 +9,7 @@ Remember that the goal is not necessarily to answer all the questions, but to go
 Improvisation is welcome, as long as it demonstrates your ability to build great apps with us!
 
 ## Launch the apps
+
 Before starting, check that you can run the following apps:
 
 - The PostgreSQL database using `docker-compose up -V`
@@ -18,16 +19,26 @@ Before starting, check that you can run the following apps:
 ## Coding guidelines
 
 ### Do whatever you want with the code! 💪️
+
 The code you just pulled is a minimal working frontend/backend app needed to answer the questions.
 This is not required, but you can install any additional package you want and do whatever you want
 with the code to show us your skills, as long as you answer the questions 😉️
 
 ### Styling
+
 A few key points to help you through styling:
+
 1. App must be browsable on any decent-size desktop screen
 2. Paddings, margins & border radiuses have discrete values: 4px, 8px or any other multiple of 8
 3. Color set is located [here](front/src/styles/colors.scss)
 
+## Todo
+
+- Launch the app
+- Create NextJs project
+- Replicate existing project feature in NextJs project
+- Use Tailwind
+- Start coding features
 
 ## Ready? GO! 🏁️
 
@@ -44,24 +55,27 @@ A few key points to help you through styling:
 ### Appendix
 
 #### Expected hotel model
+
 ```json
 {
-    "id": 1,
-    "name": "Molitor",
-    "stars": 5,
-    "preview": "Petit dej + piscine + ...",
-    "pictureId": "<img-url>",
-    
+  "id": 1,
+  "name": "Molitor",
+  "stars": 5,
+  "preview": "Petit dej + piscine + ...",
+  "pictureId": "<img-url>"
 }
 ```
 
 #### Hotel card
+
 ![hotel card](./hotel-card.png)
 
 #### Final expected result
+
 ![final result](./final.png)
 
 #### Availability definition
+
 - An hotel availabilities are defined by its rooms openings (easy)
 - The table `openings` has 6 interesting columns: `room_id` (malin), `sale_id`, `date`, `stock`, `price` and `discount_price`
 - An hotel is bookable on a given day only if there is at least an opening for one of its room on this date and with a stock > 0
