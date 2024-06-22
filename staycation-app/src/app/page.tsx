@@ -1,20 +1,22 @@
-import { getHotels, Hotel } from "@/services/hotelService";
+import { getHotels, Hotel } from "../services/hotelService";
 
 type HotelListProps = {
   hotels: Hotel[];
 };
 
 const HotelList = ({ hotels }: HotelListProps) => {
-  return hotels.map((hotel) => {
-    return (
-      <ul>
-        <li>
-          {hotel.id} - {hotel.name} - {hotel.pictureId} - {hotel.preview} -{" "}
-          {hotel.stars}
-        </li>
-      </ul>
-    );
-  });
+  return (
+    <ul>
+      {hotels.map((hotel) => {
+        return (
+          <li key={`${hotel.id}`} data-testid={`hotel-${hotel.id}`}>
+            {hotel.id} - {hotel.name} - {hotel.pictureId} - {hotel.preview} -{" "}
+            {hotel.stars}
+          </li>
+        );
+      })}
+    </ul>
+  );
 };
 
 export default async function Home() {
@@ -28,7 +30,11 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       {!errorOccured && <HotelList hotels={hotels} />}
-      {errorOccured && "An error occured when retrieving the hotel list :("}
+      {errorOccured && (
+        <span data-testid="hotel-error">
+          An error occured when retrieving the hotel list :(
+        </span>
+      )}
     </main>
   );
 }
