@@ -6,16 +6,33 @@ type HotelListProps = {
 
 const HotelList = ({ hotels }: HotelListProps) => {
   return (
-    <ul>
+    <div className="grid lg:grid-cols-2 gap-4">
       {hotels.map((hotel) => {
         return (
-          <li key={`${hotel.id}`} data-testid={`hotel-${hotel.id}`}>
-            {hotel.id} - {hotel.name} - {hotel.pictureId} - {hotel.preview} -{" "}
-            {hotel.stars}
-          </li>
+          <div className="grid-rows-3 mb-10" key={`${hotel.id}`}>
+            <img
+              data-testid={`hotel-${hotel.id}-img`}
+              loading="lazy"
+              className="rounded"
+              alt={hotel.name}
+              src={hotel.pictureId}
+            />
+            <div
+              data-testid={`hotel-${hotel.id}-name`}
+              className="mt-4 font-bold"
+            >
+              {hotel.name} {[...Array(hotel.stars)].map(() => "*")}
+            </div>
+            <div
+              data-testid={`hotel-${hotel.id}-preview`}
+              className="font-light"
+            >
+              {hotel.preview}
+            </div>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 };
 
@@ -28,13 +45,13 @@ export default async function Home() {
     errorOccured = true;
   }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <>
       {!errorOccured && <HotelList hotels={hotels} />}
       {errorOccured && (
         <span data-testid="hotel-error">
           An error occured when retrieving the hotel list :(
         </span>
       )}
-    </main>
+    </>
   );
 }

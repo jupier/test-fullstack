@@ -2,6 +2,7 @@ import { expect, test, vi, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import Page from "./page";
 import * as hotelService from "../services/hotelService";
+import { validateHotel } from "../utils/testUtiliites";
 
 vi.mock("../services/hotelService");
 
@@ -20,8 +21,7 @@ test("Home page should display mocked hotel list", async () => {
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
   const jsx = await Page();
   render(jsx);
-  const hotel = await screen.getByTestId("hotel-42").textContent;
-  expect(hotel).toBe("42 - name - picture - preview - 2");
+  await validateHotel(42, "picture", "preview", "name **");
 });
 
 test("Home page should display an error", async () => {
