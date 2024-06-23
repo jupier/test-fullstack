@@ -1,4 +1,5 @@
-import { getHotels, Hotel } from "../services/hotelService";
+import { Hotel } from "../models/Hotel";
+import { getHotels } from "../services/hotelService";
 
 type HotelListProps = {
   hotels: Hotel[];
@@ -15,20 +16,22 @@ const HotelList = ({ hotels }: HotelListProps) => {
               loading="lazy"
               className="rounded"
               alt={hotel.name}
-              src={hotel.pictureId}
+              src={hotel.imageUrl}
             />
-            <div
-              data-testid={`hotel-${hotel.id}-name`}
-              className="mt-4 font-bold"
-            >
-              {hotel.name} {[...Array(hotel.stars)].map(() => "*")}
+            <div className="flex justify-between mt-4">
+              <div data-testid={`hotel-${hotel.id}-name`} className="font-bold">
+                {hotel.name} {[...Array(hotel.stars)].map(() => "*")}
+              </div>
+              {hotel.review && (
+                <div
+                  data-testid={`hotel-${hotel.id}-review`}
+                  className="text-gray-400"
+                >
+                  {hotel.review.score} ({hotel.review.count})
+                </div>
+              )}
             </div>
-            <div
-              data-testid={`hotel-${hotel.id}-preview`}
-              className="font-light"
-            >
-              {hotel.preview}
-            </div>
+            <div data-testid={`hotel-${hotel.id}-summary`}>{hotel.summary}</div>
           </div>
         );
       })}
