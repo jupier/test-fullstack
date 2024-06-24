@@ -6,7 +6,8 @@ export const validateHotel = async (
   imgUrl: string,
   preview: string,
   name: string,
-  review: string | undefined
+  review: string | undefined,
+  availability: string | undefined
 ) => {
   const hotelImg = await screen
     .getByTestId(`hotel-${hotelId}-img`)
@@ -17,8 +18,12 @@ export const validateHotel = async (
     .textContent;
   const hotelReview = await screen.queryByTestId(`hotel-${hotelId}-review`)
     ?.textContent;
+  const hotelAvailability = await screen.queryByTestId(
+    `hotel-${hotelId}-availability`
+  )?.textContent;
   expect(hotelImg).toBe(imgUrl);
   expect(hotelPreview).toBe(preview);
   expect(hotelName).toBe(name);
   expect(hotelReview).toBe(review);
+  expect(hotelAvailability).toBe(availability);
 };

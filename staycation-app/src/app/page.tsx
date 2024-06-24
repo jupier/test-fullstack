@@ -32,6 +32,19 @@ const HotelList = ({ hotels }: HotelListProps) => {
               )}
             </div>
             <div data-testid={`hotel-${hotel.id}-summary`}>{hotel.summary}</div>
+            {hotel.availability && (
+              <div data-testid={`hotel-${hotel.id}-availability`}>
+                <span className="font-bold">
+                  {hotel.availability.discountPrice}€
+                </span>{" "}
+                <span className="text-gray-400 line-through">
+                  {hotel.availability.originalPrice}€
+                </span>{" "}
+                <span className="font-bold bg-[#ff2e63] text-white p-1 rounded">
+                  -{hotel.availability.discountPercentage}%
+                </span>
+              </div>
+            )}
           </div>
         );
       })}

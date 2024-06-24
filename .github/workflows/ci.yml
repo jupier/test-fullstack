@@ -1,0 +1,28 @@
+name: CI workflow
+
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./staycation-app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: staycation-app/package-lock.json
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker-compose.yml"
+      - run: npm ci
+        working-directory: staycation-app
+      - run: npm run lint
+        working-directory: staycation-app
+      - run: npm test && npm run coverage
+        working-directory: staycation-app
