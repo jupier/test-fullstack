@@ -15,7 +15,8 @@ test("Home page should display real hotel list", async () => {
     "https://staycation.twic.pics/v1/cover=1000x-/image:pictures/production/3c3811c53bccb69bba40424e79c013ca.jpg",
     "Accès piscine + hammam + vin + petit dej inclus",
     "Hôtel La Lanterne ****",
-    "8.8 (6)"
+    "8.8 (6)",
+    "170€ 322€ -47%"
   );
 
   const hotels = await screen.findAllByTestId(/^hotel-.*-img$/i, {
