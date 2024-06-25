@@ -1,9 +1,9 @@
 import { expect, test } from "vitest";
 import { getHotels } from "../services/hotelService";
+import { Hotel } from "../models/Hotel";
 
 test("getHotels should return the hotel list", async () => {
-  const hotels = await getHotels();
-  expect(hotels[0]).toEqual({
+  const expectedIndex0: Hotel = {
     id: 1,
     name: "Hôtel La Lanterne",
     stars: 4,
@@ -16,8 +16,13 @@ test("getHotels should return the hotel list", async () => {
       originalPrice: 322,
       discountPercentage: 47,
     },
-  });
-  expect(hotels[7]).toEqual({
+    stock: {
+      original: 3,
+      remaining: 2,
+      reservations: 1,
+    },
+  };
+  const expectedIndex7: Hotel = {
     id: 8,
     name: "Boutet Bastille",
     stars: 5,
@@ -30,8 +35,13 @@ test("getHotels should return the hotel list", async () => {
       originalPrice: 272,
       discountPercentage: 26,
     },
-  });
-  expect(hotels[9]).toEqual({
+    stock: {
+      original: 3,
+      remaining: 2,
+      reservations: 1,
+    },
+  };
+  const expectedIndex9: Hotel = {
     id: 10,
     name: "Hôtel Thoumieux",
     stars: 4,
@@ -40,8 +50,9 @@ test("getHotels should return the hotel list", async () => {
       "https://staycation.twic.pics/v1/cover=1000x-/image:pictures/production/5f0c8e189b6a33be3425c44bc48d27ec.jpg",
     review: null,
     availability: null,
-  });
-  expect(hotels[29]).toEqual({
+    stock: null,
+  };
+  const expectedIndex29: Hotel = {
     id: 30,
     name: "Penthouse du Chat Noir",
     stars: 4,
@@ -50,6 +61,12 @@ test("getHotels should return the hotel list", async () => {
       "https://staycation.twic.pics/v1/cover=1000x-/image:pictures/production/13a236d4aac77fe808289c6427557c73.jpg",
     review: null,
     availability: null,
-  });
+    stock: null,
+  };
+  const hotels = await getHotels();
+  expect(hotels[0]).toEqual(expectedIndex0);
+  expect(hotels[7]).toEqual(expectedIndex7);
+  expect(hotels[9]).toEqual(expectedIndex9);
+  expect(hotels[29]).toEqual(expectedIndex29);
   expect(hotels).toHaveLength(30);
 });

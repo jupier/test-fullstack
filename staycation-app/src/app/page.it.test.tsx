@@ -16,7 +16,8 @@ test("Home page should display real hotel list", async () => {
     "Accès piscine + hammam + vin + petit dej inclus",
     "Hôtel La Lanterne ****",
     "8.8 (6)",
-    "170€ 322€ -47%"
+    "170€ 322€ -47%",
+    "Only 2 rooms left on our site!"
   );
 
   const hotels = await screen.findAllByTestId(/^hotel-.*-img$/i, {
