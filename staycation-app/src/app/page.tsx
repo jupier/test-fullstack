@@ -14,11 +14,11 @@ const HotelList = ({ hotels }: HotelListProps) => {
             <img
               data-testid={`hotel-${hotel.id}-img`}
               loading="lazy"
-              className="rounded"
+              className="rounded mb-4"
               alt={hotel.name}
               src={hotel.imageUrl}
             />
-            <div className="flex justify-between mt-4">
+            <div className="flex justify-between mb-1">
               <div data-testid={`hotel-${hotel.id}-name`} className="font-bold">
                 {hotel.name} {[...Array(hotel.stars)].map(() => "*")}
               </div>
@@ -31,20 +31,33 @@ const HotelList = ({ hotels }: HotelListProps) => {
                 </div>
               )}
             </div>
-            <div data-testid={`hotel-${hotel.id}-summary`}>{hotel.summary}</div>
-            {hotel.availability && (
-              <div data-testid={`hotel-${hotel.id}-availability`}>
-                <span className="font-bold">
-                  {hotel.availability.discountPrice}€
-                </span>{" "}
-                <span className="text-gray-400 line-through">
-                  {hotel.availability.originalPrice}€
-                </span>{" "}
-                <span className="font-bold bg-[#ff2e63] text-white p-1 rounded">
-                  -{hotel.availability.discountPercentage}%
-                </span>
-              </div>
-            )}
+            <div className="mb-1" data-testid={`hotel-${hotel.id}-summary`}>
+              {hotel.summary}
+            </div>
+            <div className="flex justify-between">
+              {hotel.availability && (
+                <div data-testid={`hotel-${hotel.id}-availability`}>
+                  <span className="font-bold">
+                    {hotel.availability.discountPrice}€
+                  </span>{" "}
+                  <span className="text-gray-400 line-through">
+                    {hotel.availability.originalPrice}€
+                  </span>{" "}
+                  <span className="font-bold bg-[#ff2e63] text-white p-1 rounded">
+                    -{hotel.availability.discountPercentage}%
+                  </span>
+                </div>
+              )}
+              {hotel.stock && (
+                <div
+                  data-testid={`hotel-${hotel.id}-stock`}
+                  className="font-bold"
+                >
+                  Only {hotel.stock.remaining} room
+                  {hotel.stock.remaining > 1 ? "s" : ""} left on our site!
+                </div>
+              )}
+            </div>
           </div>
         );
       })}

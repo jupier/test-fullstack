@@ -9,7 +9,7 @@ vi.mock("../services/hotelService");
 
 afterEach(cleanup);
 
-test("Home page should display mocked hotel", async () => {
+test("Home page should display an hotel", async () => {
   const expectedHotels: Hotel[] = [
     {
       id: 42,
@@ -26,6 +26,11 @@ test("Home page should display mocked hotel", async () => {
         originalPrice: 300,
         discountPercentage: 10,
       },
+      stock: {
+        original: 5,
+        reservations: 3,
+        remaining: 2,
+      },
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
@@ -37,11 +42,12 @@ test("Home page should display mocked hotel", async () => {
     "summary",
     "name **",
     "5 (2)",
-    "200€ 300€ -10%"
+    "200€ 300€ -10%",
+    "Only 2 rooms left on our site!"
   );
 });
 
-test("Home page should display mocked hotel without review", async () => {
+test("Home page should display an hotel without review", async () => {
   const expectedHotels: Hotel[] = [
     {
       id: 42,
@@ -55,6 +61,11 @@ test("Home page should display mocked hotel without review", async () => {
         originalPrice: 300,
         discountPercentage: 10,
       },
+      stock: {
+        original: 5,
+        reservations: 3,
+        remaining: 2,
+      },
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
@@ -66,11 +77,12 @@ test("Home page should display mocked hotel without review", async () => {
     "summary",
     "name **",
     undefined,
-    "200€ 300€ -10%"
+    "200€ 300€ -10%",
+    "Only 2 rooms left on our site!"
   );
 });
 
-test("Home page should display mocked hotel without availability", async () => {
+test("Home page should display an hotel without availability", async () => {
   const expectedHotels: Hotel[] = [
     {
       id: 42,
@@ -83,15 +95,58 @@ test("Home page should display mocked hotel without availability", async () => {
         score: 5,
       },
       availability: null,
+      stock: {
+        original: 5,
+        reservations: 3,
+        remaining: 2,
+      },
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
   const jsx = await Page();
   render(jsx);
-  await validateHotel(42, "picture", "summary", "name **", "5 (2)", undefined);
+  await validateHotel(
+    42,
+    "picture",
+    "summary",
+    "name **",
+    "5 (2)",
+    undefined,
+    "Only 2 rooms left on our site!"
+  );
 });
 
-test("Home page should display an error", async () => {
+test("Home page should display an hotel without stock", async () => {
+  const expectedHotels: Hotel[] = [
+    {
+      id: 42,
+      name: "name",
+      imageUrl: "picture",
+      summary: "summary",
+      stars: 2,
+      review: {
+        count: 2,
+        score: 5,
+      },
+      availability: null,
+      stock: null,
+    },
+  ];
+  vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
+  const jsx = await Page();
+  render(jsx);
+  await validateHotel(
+    42,
+    "picture",
+    "summary",
+    "name **",
+    "5 (2)",
+    undefined,
+    undefined
+  );
+});
+
+test("Home page should display an error message in an error occured when retrieving the hotel list", async () => {
   screen.debug();
   vi.mocked(hotelService.getHotels).mockRejectedValue("error");
   const jsx = await Page();
