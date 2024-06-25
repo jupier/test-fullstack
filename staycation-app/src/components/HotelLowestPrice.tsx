@@ -11,7 +11,7 @@ export const HotelLowestPrice = ({
 }: HotelLowestPriceProps) => {
   const testIds = createTestIds(hotelId);
   return (
-    <span data-testid={testIds.lowestPrice} className="text-gray-400">
+    <span data-testid={testIds.lowestPrice} className="text-gray">
       {lowestPrice}€
     </span>
   );

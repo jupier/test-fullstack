@@ -14,10 +14,10 @@ export const HotelAvailability = ({
   return (
     <div data-testid={testIds.availability}>
       <span className="font-bold">{availability.discountPrice}€</span>{" "}
-      <span className="text-gray-400 line-through">
+      <span className="text-gray line-through">
         {availability.originalPrice}€
       </span>{" "}
-      <span className="font-bold bg-[#ff2e63] text-white p-1 rounded">
+      <span className="font-bold bg-pink text-white p-1 rounded">
         -{availability.discountPercentage}%
       </span>
     </div>

@@ -21,7 +21,7 @@ export const HotelTitle = ({
         {hotelName} {[...Array(numberOfStars)].map(() => "*")}
       </div>
       {review && (
-        <div data-testid={testIds.review} className="text-gray-400">
+        <div data-testid={testIds.review} className="text-gray">
           {review.score} ({review.count})
         </div>
       )}
