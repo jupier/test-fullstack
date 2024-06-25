@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      </head>
       <body>
         <div className="sticky top-0 bg-white flex justify-center h-20 items-center mb-10 shadow-md">
           <StaycationLogo />
