@@ -1,5 +1,6 @@
 import { expect } from "vitest";
 import { screen } from "@testing-library/react";
+import { createTestIds } from "./testIds";
 
 export const validateHotel = async (
   hotelId: number,
@@ -11,23 +12,16 @@ export const validateHotel = async (
   stock: string | undefined,
   lowestPrice: string | undefined
 ) => {
-  const hotelImg = await screen
-    .getByTestId(`hotel-${hotelId}-img`)
-    .getAttribute("src");
-  const hotelPreview = await screen.getByTestId(`hotel-${hotelId}-summary`)
-    .textContent;
-  const hotelName = await screen.getByTestId(`hotel-${hotelId}-name`)
-    .textContent;
-  const hotelReview = await screen.queryByTestId(`hotel-${hotelId}-review`)
+  const testIds = createTestIds(hotelId);
+  const hotelImg = await screen.getByTestId(testIds.img).getAttribute("src");
+  const hotelPreview = await screen.getByTestId(testIds.summary).textContent;
+  const hotelName = await screen.getByTestId(testIds.name).textContent;
+  const hotelReview = await screen.queryByTestId(testIds.review)?.textContent;
+  const hotelAvailability = await screen.queryByTestId(testIds.availability)
     ?.textContent;
-  const hotelAvailability = await screen.queryByTestId(
-    `hotel-${hotelId}-availability`
-  )?.textContent;
-  const hotelStock = await screen.queryByTestId(`hotel-${hotelId}-stock`)
+  const hotelStock = await screen.queryByTestId(testIds.stock)?.textContent;
+  const hotelLowestPrice = await screen.queryByTestId(testIds.lowestPrice)
     ?.textContent;
-  const hotelLowestPrice = await screen.queryByTestId(
-    `hotel-${hotelId}-lowestPrice`
-  )?.textContent;
   expect(hotelImg).toBe(imgUrl);
   expect(hotelPreview).toBe(preview);
   expect(hotelName).toBe(name);

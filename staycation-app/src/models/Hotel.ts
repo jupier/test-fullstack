@@ -4,19 +4,19 @@ import {
   HotelRow,
 } from "@/services/hotelService";
 
-type Stock = {
+export type Stock = {
   original: number;
   reservations: number;
   remaining: number;
 };
 
-type Availability = {
+export type Availability = {
   discountPrice: number;
   originalPrice: number;
   discountPercentage: number;
 };
 
-type Review = {
+export type Review = {
   score: number;
   count: number;
 };
