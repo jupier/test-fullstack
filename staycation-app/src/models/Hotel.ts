@@ -1,4 +1,4 @@
-import { HotelRow } from "@/services/hotelService";
+import { HotelAvailabilityRow, HotelRow } from "@/services/hotelService";
 
 type Stock = {
   original: number;
@@ -24,38 +24,47 @@ export type Hotel = {
   stock: Stock | null;
 };
 
-export const createHotelFromHotelRow = (row: HotelRow): Hotel => {
+export const createHotelFromHotelRow = (
+  hotel: HotelRow,
+  availabilityRow: HotelAvailabilityRow | undefined
+): Hotel => {
   const stock: Stock | null =
-    row.originalStock != null &&
-    row.reservations != null &&
-    row.originalStock - row.reservations > 0
+    availabilityRow &&
+    availabilityRow.originalStock != null &&
+    availabilityRow.reservations != null &&
+    availabilityRow.originalStock - availabilityRow.reservations > 0
       ? {
-          original: row.originalStock,
-          reservations: row.reservations,
-          remaining: row.originalStock - row.reservations,
+          original: availabilityRow.originalStock,
+          reservations: availabilityRow.reservations,
+          remaining:
+            availabilityRow.originalStock - availabilityRow.reservations,
         }
       : null;
 
   const availability: Availability | null =
-    stock && row.minPrice != null && row.minDiscountPrice != null
+    stock &&
+    availabilityRow &&
+    availabilityRow.minPrice != null &&
+    availabilityRow.minDiscountPrice != null
       ? {
-          discountPrice: row.minDiscountPrice,
-          originalPrice: row.minPrice,
+          discountPrice: availabilityRow.minDiscountPrice,
+          originalPrice: availabilityRow.minPrice,
           discountPercentage: ~~(
-            ((row.minPrice - row.minDiscountPrice) * 100) /
-            row.minPrice
+            ((availabilityRow.minPrice - availabilityRow.minDiscountPrice) *
+              100) /
+            availabilityRow.minPrice
           ),
         }
       : null;
   return {
-    id: row.id,
-    name: row.name,
-    stars: row.stars,
-    summary: row.preview,
-    imageUrl: row.pictureId,
+    id: hotel.id,
+    name: hotel.name,
+    stars: hotel.stars,
+    summary: hotel.preview,
+    imageUrl: hotel.pictureId,
     review:
-      row.reviewCount && row.reviewScore
-        ? { score: row.reviewScore, count: row.reviewCount }
+      hotel.reviewCount && hotel.reviewScore
+        ? { score: hotel.reviewScore, count: hotel.reviewCount }
         : null,
     availability,
     stock,
