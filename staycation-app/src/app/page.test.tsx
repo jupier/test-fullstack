@@ -31,6 +31,7 @@ test("Home page should display an hotel", async () => {
         reservations: 3,
         remaining: 2,
       },
+      lowestPrice: null,
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
@@ -43,7 +44,8 @@ test("Home page should display an hotel", async () => {
     "name **",
     "5 (2)",
     "200€ 300€ -10%",
-    "Only 2 rooms left on our site!"
+    "Only 2 rooms left on our site!",
+    undefined
   );
 });
 
@@ -66,6 +68,7 @@ test("Home page should display an hotel without review", async () => {
         reservations: 3,
         remaining: 2,
       },
+      lowestPrice: null,
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
@@ -78,7 +81,8 @@ test("Home page should display an hotel without review", async () => {
     "name **",
     undefined,
     "200€ 300€ -10%",
-    "Only 2 rooms left on our site!"
+    "Only 2 rooms left on our site!",
+    undefined
   );
 });
 
@@ -100,6 +104,7 @@ test("Home page should display an hotel without availability", async () => {
         reservations: 3,
         remaining: 2,
       },
+      lowestPrice: null,
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
@@ -112,7 +117,8 @@ test("Home page should display an hotel without availability", async () => {
     "name **",
     "5 (2)",
     undefined,
-    "Only 2 rooms left on our site!"
+    "Only 2 rooms left on our site!",
+    undefined
   );
 });
 
@@ -130,6 +136,7 @@ test("Home page should display an hotel without stock", async () => {
       },
       availability: null,
       stock: null,
+      lowestPrice: null,
     },
   ];
   vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
@@ -142,7 +149,40 @@ test("Home page should display an hotel without stock", async () => {
     "name **",
     "5 (2)",
     undefined,
+    undefined,
     undefined
+  );
+});
+
+test("Home page should display an hotel with lowest price", async () => {
+  const expectedHotels: Hotel[] = [
+    {
+      id: 42,
+      name: "name",
+      imageUrl: "picture",
+      summary: "summary",
+      stars: 2,
+      review: {
+        count: 2,
+        score: 5,
+      },
+      availability: null,
+      stock: null,
+      lowestPrice: 142,
+    },
+  ];
+  vi.mocked(hotelService.getHotels).mockResolvedValue(expectedHotels);
+  const jsx = await Page();
+  render(jsx);
+  await validateHotel(
+    42,
+    "picture",
+    "summary",
+    "name **",
+    "5 (2)",
+    undefined,
+    undefined,
+    "142€"
   );
 });
 

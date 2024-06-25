@@ -21,6 +21,20 @@ test("getHotels should return the hotel list", async () => {
       remaining: 2,
       reservations: 1,
     },
+    lowestPrice: null,
+  };
+  const expectedIndex3: Hotel = {
+    id: 4,
+    name: "Terrass Hotel",
+    stars: 4,
+    summary:
+      "Accès rooftop & terrasse + sauna & hammam privatifs + petit dej inclus",
+    imageUrl:
+      "https://staycation.twic.pics/v1/cover=1000x-/image:pictures/production/4d56a8c573dd7f614617f9fd55f2b890.jpg",
+    review: { score: 9, count: 10 },
+    availability: null,
+    stock: null,
+    lowestPrice: 226,
   };
   const expectedIndex7: Hotel = {
     id: 8,
@@ -40,6 +54,7 @@ test("getHotels should return the hotel list", async () => {
       remaining: 2,
       reservations: 1,
     },
+    lowestPrice: null,
   };
   const expectedIndex9: Hotel = {
     id: 10,
@@ -51,6 +66,7 @@ test("getHotels should return the hotel list", async () => {
     review: null,
     availability: null,
     stock: null,
+    lowestPrice: null,
   };
   const expectedIndex29: Hotel = {
     id: 30,
@@ -62,9 +78,11 @@ test("getHotels should return the hotel list", async () => {
     review: null,
     availability: null,
     stock: null,
+    lowestPrice: 598,
   };
   const hotels = await getHotels();
   expect(hotels[0]).toEqual(expectedIndex0);
+  expect(hotels[3]).toEqual(expectedIndex3);
   expect(hotels[7]).toEqual(expectedIndex7);
   expect(hotels[9]).toEqual(expectedIndex9);
   expect(hotels[29]).toEqual(expectedIndex29);

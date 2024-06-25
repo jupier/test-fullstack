@@ -19,7 +19,7 @@ test("createHotelFromHotelRow should create an Hotel with review", async () => {
     originalStock: 3,
     reservations: 2,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   const expected: Hotel = {
     id: 42,
     name: "Hotel Name",
@@ -40,6 +40,7 @@ test("createHotelFromHotelRow should create an Hotel with review", async () => {
       reservations: 2,
       original: 3,
     },
+    lowestPrice: null,
   };
   expect(hotel).toEqual(expected);
 });
@@ -61,7 +62,7 @@ test("createHotelFromHotelRow should create an Hotel with 0 review", async () =>
     originalStock: 3,
     reservations: 2,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -78,6 +79,7 @@ test("createHotelFromHotelRow should create an Hotel with 0 review", async () =>
       reservations: 2,
       original: 3,
     },
+    lowestPrice: null,
     summary: "I love this hotel!",
   });
 });
@@ -99,7 +101,7 @@ test("createHotelFromHotelRow should create an Hotel without review", async () =
     originalStock: 3,
     reservations: 2,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -116,6 +118,7 @@ test("createHotelFromHotelRow should create an Hotel without review", async () =
       reservations: 2,
       original: 3,
     },
+    lowestPrice: null,
     summary: "I love this hotel!",
   });
 });
@@ -137,7 +140,7 @@ test("createHotelFromHotelRow should create an Hotel with min price = 0", async 
     originalStock: 3,
     reservations: 2,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -155,6 +158,7 @@ test("createHotelFromHotelRow should create an Hotel with min price = 0", async 
       reservations: 2,
       original: 3,
     },
+    lowestPrice: null,
   });
 });
 
@@ -175,7 +179,7 @@ test("createHotelFromHotelRow should create an Hotel with min discount price = 0
     originalStock: 3,
     reservations: 2,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -193,6 +197,7 @@ test("createHotelFromHotelRow should create an Hotel with min discount price = 0
       reservations: 2,
       original: 3,
     },
+    lowestPrice: null,
   });
 });
 
@@ -213,7 +218,7 @@ test("createHotelFromHotelRow should create an Hotel without price", async () =>
     originalStock: 3,
     reservations: 2,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -227,6 +232,7 @@ test("createHotelFromHotelRow should create an Hotel without price", async () =>
       reservations: 2,
       original: 3,
     },
+    lowestPrice: null,
   });
 });
 
@@ -247,7 +253,7 @@ test("createHotelFromHotelRow should create an hotel without availability if the
     originalStock: 3,
     reservations: 3,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -257,6 +263,7 @@ test("createHotelFromHotelRow should create an hotel without availability if the
     availability: null,
     summary: "I love this hotel!",
     stock: null,
+    lowestPrice: null,
   });
 });
 
@@ -277,7 +284,7 @@ test("createHotelFromHotelRow should create an hotel with computed remaining sto
     originalStock: 12,
     reservations: 8,
   };
-  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow);
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, availabilityRow, []);
   expect(hotel).toEqual({
     id: 42,
     name: "Hotel Name",
@@ -295,5 +302,6 @@ test("createHotelFromHotelRow should create an hotel with computed remaining sto
       original: 12,
       remaining: 4,
     },
+    lowestPrice: null,
   });
 });

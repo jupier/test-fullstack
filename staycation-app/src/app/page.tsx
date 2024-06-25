@@ -57,6 +57,14 @@ const HotelList = ({ hotels }: HotelListProps) => {
                   {hotel.stock.remaining > 1 ? "s" : ""} left on our site!
                 </div>
               )}
+              {hotel.lowestPrice && (
+                <span
+                  data-testid={`hotel-${hotel.id}-lowestPrice`}
+                  className="text-gray-400"
+                >
+                  {hotel.lowestPrice}€
+                </span>
+              )}
             </div>
           </div>
         );
