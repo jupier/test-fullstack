@@ -14,7 +14,7 @@ test("Home page should display an hotel", async () => {
     {
       id: 42,
       name: "name",
-      imageUrl: "picture",
+      imageUrl: "https://test.com",
       summary: "summary",
       stars: 2,
       review: {
@@ -39,7 +39,7 @@ test("Home page should display an hotel", async () => {
   render(jsx);
   await validateHotel(
     42,
-    "picture",
+    "https://test.com",
     "summary",
     "name **",
     "5 (2)",
@@ -54,7 +54,7 @@ test("Home page should display an hotel without review", async () => {
     {
       id: 42,
       name: "name",
-      imageUrl: "picture",
+      imageUrl: "https://test.com",
       summary: "summary",
       stars: 2,
       review: null,
@@ -76,7 +76,7 @@ test("Home page should display an hotel without review", async () => {
   render(jsx);
   await validateHotel(
     42,
-    "picture",
+    "https://test.com",
     "summary",
     "name **",
     undefined,
@@ -91,7 +91,7 @@ test("Home page should display an hotel without availability", async () => {
     {
       id: 42,
       name: "name",
-      imageUrl: "picture",
+      imageUrl: "https://test.com",
       summary: "summary",
       stars: 2,
       review: {
@@ -112,7 +112,7 @@ test("Home page should display an hotel without availability", async () => {
   render(jsx);
   await validateHotel(
     42,
-    "picture",
+    "https://test.com",
     "summary",
     "name **",
     "5 (2)",
@@ -127,7 +127,7 @@ test("Home page should display an hotel without stock", async () => {
     {
       id: 42,
       name: "name",
-      imageUrl: "picture",
+      imageUrl: "https://test.com",
       summary: "summary",
       stars: 2,
       review: {
@@ -144,7 +144,7 @@ test("Home page should display an hotel without stock", async () => {
   render(jsx);
   await validateHotel(
     42,
-    "picture",
+    "https://test.com",
     "summary",
     "name **",
     "5 (2)",
@@ -159,7 +159,7 @@ test("Home page should display an hotel with lowest price", async () => {
     {
       id: 42,
       name: "name",
-      imageUrl: "picture",
+      imageUrl: "https://test.com",
       summary: "summary",
       stars: 2,
       review: {
@@ -176,7 +176,7 @@ test("Home page should display an hotel with lowest price", async () => {
   render(jsx);
   await validateHotel(
     42,
-    "picture",
+    "https://test.com",
     "summary",
     "name **",
     "5 (2)",

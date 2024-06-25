@@ -22,7 +22,8 @@ export const validateHotel = async (
   const hotelStock = await screen.queryByTestId(testIds.stock)?.textContent;
   const hotelLowestPrice = await screen.queryByTestId(testIds.lowestPrice)
     ?.textContent;
-  expect(hotelImg).toBe(imgUrl);
+
+  expect(hotelImg).toContain(`/_next/image?url=${encodeURIComponent(imgUrl)}`);
   expect(hotelPreview).toBe(preview);
   expect(hotelName).toBe(name);
   expect(hotelReview).toBe(review);
