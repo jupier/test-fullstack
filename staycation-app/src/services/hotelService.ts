@@ -58,7 +58,7 @@ const fetchAvailabilities = async (): Promise<HotelAvailabilityRow[]> => {
       SELECT DISTINCT ON (b.id) b.id FROM openings o1
       JOIN sale_dates sd on o1.sale_id = sd.id
       JOIN bookings b on o1.room_id = b.room_id AND b.date = ANY(sd.bookable_days)
-      WHERE o1.sale_id = 90 AND o1.id = openings.id
+      WHERE o1.sale_id = (SELECT MAX(id) from sale_dates) AND o1.id = openings.id
       ORDER BY b.id, o1.id
       ) as bookings
     ) as reservations

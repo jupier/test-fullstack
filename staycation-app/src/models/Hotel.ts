@@ -56,6 +56,7 @@ const computeStock = (
       }
     : null;
 };
+
 const computeAvailability = (
   availabilityRow: HotelAvailabilityRow | undefined
 ): Availability | null => {

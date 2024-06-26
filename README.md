@@ -1,20 +1,42 @@
 # Staycation's Technical Test
 
-Welcome! This technical test aims to validate a few basic programming skills before we go further.
+## Launch the app
 
-The goal is to reproduce a light version of Staycation's homepage package wall.
-Some of the questions are independant, some others are sequentially dependant.
+- Launch the PostgreSQL database using `docker-compose up -V`
+- Launch the app using `cd staycation-app && nvm use && npm install && npm run dev`
 
-Remember that the goal is not necessarily to answer all the questions, but to go far enough to show the range of your talents ;)
-Improvisation is welcome, as long as it demonstrates your ability to build great apps with us!
+## Launch the tests
 
-## Launch the apps
+- Launch the PostgreSQL database using `docker-compose up -V` (I've implemented some integration tests that need the database to be up)
+- Launch the test using `npm install && npm run test`
 
-Before starting, check that you can run the following apps:
+It's also possible to get the test coverage using `npm run coverage`
 
-- The PostgreSQL database using `docker-compose up -V`
-- The front app using `cd front; yarn start`
-- The backend of your choice in the `back` folder, referring to its launch instruction
+## What I've done
+
+1. ✅ Fetch hotels so it matches the hotel model described below
+2. ✅ Display hotel cards as shown in the figure below
+3. ✅ Top bar should be static while scrolling. Implement it
+4. ✅ We want the Staycation logo to be centered in the top bar, as shown in the figure below. Implement it.
+5. ✅ Display the aggregated review count & score for each package card
+6. ✅ Display the last availability on every package price. See availability definition below
+7. ✅ Take bookings into account to compute remaining stock
+    - I've implemented a solution, but I've the feeling like it's not perfect especially when there is multiple openings with the same discount price but different openings date.
+    - Should I take the opening date into account to compute the remaining stock? And even compute the availability?
+    - Happy to discuss it.
+8. ✅ If a package is not available on the current sale date, fetch its lowest opening price on the most recent sale date it has availabilites on (careful, it's a windowed lookup ;)). Display these availabilities in grey on the package card.
+9. (no code) How would you implement a caching strategy for this app?
+    - To discuss
+
+## Thoughts
+
+- I've tried to implement the algorithm with a single query to the database. Unfortunately, I've not been able to do it.
+It was always a bit complicated that's why I've decided to split the logic in multiple queries. I'm not really a fan of this solution
+and would be happy to discuss it.
+- My testing strategy is not perfect. I've implemented some integration tests that need the database to be up. I've also implemented some unit tests.
+If I had more time, I would have implemented more unit tests and less integration tests. And even some e2e tests with Cypress.
+- I think using NextJs and tailwind was a good idea because it allowed me to quickly implement the app.
+Everything is rendered on the server side. Another approach would have been to use more client-side rendering.
 
 ## Coding guidelines
 
@@ -31,26 +53,6 @@ A few key points to help you through styling:
 1. App must be browsable on any decent-size desktop screen
 2. Paddings, margins & border radiuses have discrete values: 4px, 8px or any other multiple of 8
 3. Color set is located [here](front/src/styles/colors.scss)
-
-## Todo
-
-- Launch the app
-- Create NextJs project
-- Replicate existing project feature in NextJs project
-- Use Tailwind
-- Start coding features
-
-## Ready? GO! 🏁️
-
-1. Fetch hotels so it matches the hotel model described below
-2. Display hotel cards as shown in the figure below
-3. Top bar should be static while scrolling. Implement it
-4. We want the Staycation logo to be centered in the top bar, as shown in the figure below. Implement it.
-5. Display the aggregated review count & score for each package card
-6. Display the last availability on every package price. See availability definition below
-7. Take bookings into account to compute remaining stock
-8. If a package is not available on the current sale date, fetch its lowest opening price on the most recent sale date it has availabilites on (careful, it's a windowed lookup ;)). Display these availabilities in grey on the package card.
-9. (no code) How would you implement a caching strategy for this app?
 
 ### Appendix
 
