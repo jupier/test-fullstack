@@ -1,15 +1,24 @@
-import { HotelRow } from "@/services/hotelService";
+import {
+  HotelAvailabilityRow,
+  HotelLowestPriceRow,
+  HotelRow,
+} from "@/services/hotelService";
 
-type Stock = {
+export type Stock = {
   original: number;
   reservations: number;
   remaining: number;
 };
 
-type Availability = {
+export type Availability = {
   discountPrice: number;
   originalPrice: number;
   discountPercentage: number;
+};
+
+export type Review = {
+  score: number;
+  count: number;
 };
 
 export type Hotel = {
@@ -19,45 +28,79 @@ export type Hotel = {
   summary: string;
   // TODO: imageURL could be an URL object
   imageUrl: string;
-  review: { score: number; count: number } | null;
+  review: Review | null;
   availability: Availability | null;
   stock: Stock | null;
+  lowestPrice: number | null;
 };
 
-export const createHotelFromHotelRow = (row: HotelRow): Hotel => {
-  const stock: Stock | null =
-    row.originalStock != null &&
-    row.reservations != null &&
-    row.originalStock - row.reservations > 0
-      ? {
-          original: row.originalStock,
-          reservations: row.reservations,
-          remaining: row.originalStock - row.reservations,
-        }
-      : null;
+const determineLowestPrice = (
+  lowestPrices: HotelLowestPriceRow[]
+): HotelLowestPriceRow | undefined => {
+  return lowestPrices.find(
+    (price) => price.originalStock - price.reservations > 0
+  );
+};
 
+const computeStock = (
+  availabilityRow: HotelAvailabilityRow | undefined
+): Stock | null => {
+  return availabilityRow &&
+    availabilityRow.originalStock != null &&
+    availabilityRow.reservations != null &&
+    availabilityRow.originalStock - availabilityRow.reservations > 0
+    ? {
+        original: availabilityRow.originalStock,
+        reservations: availabilityRow.reservations,
+        remaining: availabilityRow.originalStock - availabilityRow.reservations,
+      }
+    : null;
+};
+const computeAvailability = (
+  availabilityRow: HotelAvailabilityRow | undefined
+): Availability | null => {
+  return availabilityRow &&
+    availabilityRow.minPrice != null &&
+    availabilityRow.minDiscountPrice != null
+    ? {
+        discountPrice: availabilityRow.minDiscountPrice,
+        originalPrice: availabilityRow.minPrice,
+        discountPercentage: ~~(
+          ((availabilityRow.minPrice - availabilityRow.minDiscountPrice) *
+            100) /
+          availabilityRow.minPrice
+        ),
+      }
+    : null;
+};
+const computeReview = (hotel: HotelRow): Review | null => {
+  return hotel.reviewCount && hotel.reviewScore
+    ? { score: hotel.reviewScore, count: hotel.reviewCount }
+    : null;
+};
+
+export const createHotelFromHotelRow = (
+  hotel: HotelRow,
+  availabilityRow: HotelAvailabilityRow | undefined,
+  lowestPrices: HotelLowestPriceRow[]
+): Hotel => {
+  const stock: Stock | null = computeStock(availabilityRow);
   const availability: Availability | null =
-    stock && row.minPrice != null && row.minDiscountPrice != null
-      ? {
-          discountPrice: row.minDiscountPrice,
-          originalPrice: row.minPrice,
-          discountPercentage: ~~(
-            ((row.minPrice - row.minDiscountPrice) * 100) /
-            row.minPrice
-          ),
-        }
-      : null;
+    stock && computeAvailability(availabilityRow);
+  let lowestPrice: number | null = null;
+  if (!availability) {
+    const res = determineLowestPrice(lowestPrices);
+    lowestPrice = res ? res.price : null;
+  }
   return {
-    id: row.id,
-    name: row.name,
-    stars: row.stars,
-    summary: row.preview,
-    imageUrl: row.pictureId,
-    review:
-      row.reviewCount && row.reviewScore
-        ? { score: row.reviewScore, count: row.reviewCount }
-        : null,
+    id: hotel.id,
+    name: hotel.name,
+    stars: hotel.stars,
+    summary: hotel.preview,
+    imageUrl: hotel.pictureId,
+    review: computeReview(hotel),
     availability,
     stock,
+    lowestPrice,
   };
 };

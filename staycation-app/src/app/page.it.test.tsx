@@ -17,7 +17,19 @@ test("Home page should display real hotel list", async () => {
     "Hôtel La Lanterne ****",
     "8.8 (6)",
     "170€ 322€ -47%",
-    "Only 2 rooms left on our site!"
+    "Only 2 rooms left on our site!",
+    undefined
+  );
+
+  await validateHotel(
+    4,
+    "https://staycation.twic.pics/v1/cover=1000x-/image:pictures/production/4d56a8c573dd7f614617f9fd55f2b890.jpg",
+    "Accès rooftop & terrasse + sauna & hammam privatifs + petit dej inclus",
+    "Terrass Hotel ****",
+    "9 (10)",
+    undefined,
+    undefined,
+    "226€"
   );
 
   const hotels = await screen.findAllByTestId(/^hotel-.*-img$/i, {
