@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { createHotelFromHotelRow, Hotel } from "./Hotel";
-import { HotelAvailabilityRow, HotelRow } from "@/services/hotelService";
+import { HotelAvailabilityRow, HotelRow } from "../services/hotelService";
 
 test("createHotelFromHotelRow should create an Hotel with review", async () => {
   const hotelRow: HotelRow = {
@@ -302,6 +302,67 @@ test("createHotelFromHotelRow should create an hotel with computed remaining sto
       original: 12,
       remaining: 4,
     },
+    lowestPrice: null,
+  });
+});
+
+test("createHotelFromHotelRow should create an hotel without availability but with lowest price", async () => {
+  const hotelRow: HotelRow = {
+    id: 42,
+    name: "Hotel Name",
+    pictureId: "https://myimage.com/test",
+    stars: 5,
+    reviewCount: null,
+    reviewScore: null,
+    preview: "I love this hotel!",
+  };
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, undefined, [
+    {
+      saleId: 9,
+      price: 166,
+      originalStock: 3,
+      reservations: 3,
+    },
+    {
+      saleId: 8,
+      price: 122,
+      originalStock: 3,
+      reservations: 2,
+    },
+  ]);
+  expect(hotel).toEqual({
+    id: 42,
+    name: "Hotel Name",
+    imageUrl: "https://myimage.com/test",
+    stars: 5,
+    review: null,
+    availability: null,
+    summary: "I love this hotel!",
+    stock: null,
+    lowestPrice: 122,
+  });
+});
+
+test("createHotelFromHotelRow should create an hotel without availability AND lowest price", async () => {
+  const hotelRow: HotelRow = {
+    id: 42,
+    name: "Hotel Name",
+    pictureId: "https://myimage.com/test",
+    stars: 5,
+    reviewCount: null,
+    reviewScore: null,
+    preview: "I love this hotel!",
+  };
+  const hotel: Hotel = createHotelFromHotelRow(hotelRow, undefined, []);
+  expect(hotel).toEqual({
+    id: 42,
+    name: "Hotel Name",
+    imageUrl: "https://myimage.com/test",
+    stars: 5,
+    review: null,
+    availability: null,
+    summary: "I love this hotel!",
+    stock: null,
     lowestPrice: null,
   });
 });
