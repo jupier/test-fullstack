@@ -1,6 +1,6 @@
 # Staycation's Technical Test
 
-## Launch the apps
+## Launch the app
 
 - Launch the PostgreSQL database using `docker-compose up -V`
 - Launch the app using `cd staycation-app && nvm use && npm install && npm run dev`
@@ -12,7 +12,7 @@
 
 It's also possible to get the test coverage using `npm run coverage`
 
-## Steps
+## What I've done
 
 1. ✅ Fetch hotels so it matches the hotel model described below
 2. ✅ Display hotel cards as shown in the figure below
@@ -27,6 +27,16 @@ It's also possible to get the test coverage using `npm run coverage`
 8. ✅ If a package is not available on the current sale date, fetch its lowest opening price on the most recent sale date it has availabilites on (careful, it's a windowed lookup ;)). Display these availabilities in grey on the package card.
 9. (no code) How would you implement a caching strategy for this app?
     - To discuss
+
+## Thoughts
+
+- I've tried to implement the algorithm with a single query to the database. Unfortunately, I've not been able to do it.
+It was always a bit complicated that's why I've decided to split the logic in multiple queries. I'm not really a fan of this solution
+and would be happy to discuss it.
+- My testing strategy is not perfect. I've implemented some integration tests that need the database to be up. I've also implemented some unit tests.
+If I had more time, I would have implemented more unit tests and less integration tests. And even some e2e tests with Cypress.
+- I think using NextJs and tailwind was a good idea because it allowed me to quickly implement the app.
+Everything is rendered on the server side. Another approach would have been to use more client-side rendering.
 
 ## Coding guidelines
 
